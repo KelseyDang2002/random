@@ -5,12 +5,14 @@
 
 char board[3][3];
 const char PLAYER = 'X';
+const char PLAYER_TWO = 'O';
 const char BOT = 'O';
 
 void resetBoard();
 void printBoard();
 int checkFreeSpaces();
 void playerMove();
+void playerTwoMove();
 void botMove();
 char checkWinner();
 void printWinner(char);
@@ -19,6 +21,8 @@ int main()
 {
     char winner = ' ';
     char response;
+
+    printf("\nWELCOME TO TIC TAC TOE\n");
 
     do
     {
@@ -34,20 +38,30 @@ int main()
             winner = checkWinner();
             if(winner != ' ' || checkFreeSpaces() == 0) // check if there is a winner or no more free spaces
             {
-                    break; // break out of this while loop
+                break; // break out of this while loop
             }
-            
-            botMove(); // the bot's turn to make a move
+
+            printBoard();
+
+            playerTwoMove(); // player 2's turn to make a move
             winner = checkWinner();
             if(winner != ' ' || checkFreeSpaces() == 0) // check if there is a winner or no more free spaces
             {
-                    break; // break out of this while loop
+                break; // break out of this while loop
             }
+            
+            // botMove(); // the bot's turn to make a move
+            // winner = checkWinner();
+            // if(winner != ' ' || checkFreeSpaces() == 0) // check if there is a winner or no more free spaces
+            // {
+            //     break; // break out of this while loop
+            // }
         }
 
         printBoard();
         printWinner(winner);
 
+        printf("\n");
         printf("\nWould you like to play again? (Y/N): ");
         scanf(" %c", &response); // add space before %c to avoid scanf to take in \n character
         response = toupper(response);
@@ -71,12 +85,13 @@ void resetBoard()
 
 void printBoard() 
 {
+    printf("\n");
     printf(" %c | %c | %c ", board[0][0], board[0][1], board[0][2]);
     printf("\n---|---|---\n");
     printf(" %c | %c | %c ", board[1][0], board[1][1], board[1][2]);
     printf("\n---|---|---\n");
     printf(" %c | %c | %c ", board[2][0], board[2][1], board[2][2]);
-    printf("\n");
+    printf("\n\n");
 }
 
 int checkFreeSpaces() 
@@ -102,6 +117,7 @@ void playerMove()
 
     do // this do-while loop keeps going until a move is valid
     {
+        printf("PLAYER 1's MOVE\n");
         printf("Enter row #(1-3): ");
         scanf("%d", &x);
         x--; // user input 1-3 becomes 0-2 because indexes go from 0-2
@@ -121,6 +137,32 @@ void playerMove()
     } while (board[x][y] != ' '); // if space is occupied, keep asking user for a different coordinate
 }
 
+void playerTwoMove()
+{
+    int x, y;
+
+    do // this do-while loop keeps going until a move is valid
+    {
+        printf("PLAYER 2's MOVE\n");
+        printf("Enter row #(1-3): ");
+        scanf("%d", &x);
+        x--; // user input 1-3 becomes 0-2 because indexes go from 0-2
+        printf("Enter column #(1-3): ");
+        scanf("%d", &y);
+        y--; // user input 1-3 becomes 0-2 because indexes go from 0-2
+
+        if(board[x][y] != ' ') // check if the user's inputted space is filled
+        {
+            printf("Invalid move!\n");
+        }
+        else // if the space is open
+        {
+            board[x][y] = PLAYER_TWO; // set the player character in this slot
+            break; // break out of this while loop
+        }
+    } while (board[x][y] != ' '); // if space is occupied, keep asking user for a different coordinate
+}
+
 void botMove() 
 {
     // bot move will be randomly generated 
@@ -130,6 +172,7 @@ void botMove()
 
     if(checkFreeSpaces() > 0) // check if there are unoccupied spaces
     {
+        printf("\nBOT MADE A MOVE\n");
         do
         {
             x = rand() % 3; // generate random number 1-3 for rows
@@ -193,11 +236,15 @@ void printWinner(char winner)
 {
     if(winner == PLAYER)
     {
-        printf("YOU WIN!");
+        printf("PLAYER 1 WINS!");
+    }
+    else if(winner == PLAYER_TWO)
+    {
+        printf("PLAYER 2 WINS");
     }
     else if(winner == BOT)
     {
-        printf("YOU LOSE!");
+        printf("BOT WINS!");
     }
     else
     {
