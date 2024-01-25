@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <time.h>
+#include <windows.h>
 
 char board[3][3];
 const char PLAYER = 'X';
@@ -41,21 +42,21 @@ int main()
                 break; // break out of this while loop
             }
 
-            printBoard();
+            // printBoard();
 
-            playerTwoMove(); // player 2's turn to make a move
-            winner = checkWinner();
-            if(winner != ' ' || checkFreeSpaces() == 0) // check if there is a winner or no more free spaces
-            {
-                break; // break out of this while loop
-            }
-            
-            // botMove(); // the bot's turn to make a move
+            // playerTwoMove(); // player 2's turn to make a move
             // winner = checkWinner();
             // if(winner != ' ' || checkFreeSpaces() == 0) // check if there is a winner or no more free spaces
             // {
             //     break; // break out of this while loop
             // }
+            
+            botMove(); // the bot's turn to make a move
+            winner = checkWinner();
+            if(winner != ' ' || checkFreeSpaces() == 0) // check if there is a winner or no more free spaces
+            {
+                break; // break out of this while loop
+            }
         }
 
         printBoard();
@@ -68,6 +69,7 @@ int main()
     } while (response == 'Y');
 
     printf("Thanks for playing, the program will exit now...");
+    Sleep(3000);
 
     return 0;
 }
