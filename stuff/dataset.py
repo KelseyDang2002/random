@@ -2,32 +2,36 @@ import csv
 
 file = r"C:\Users\Kelsey PC\Downloads\cars.csv"
 
-fields = []
-rows = []
 
-def program_exit():
-    print(f"\n\nProgram exiting...")
+def program_exit(message):
+    print(f"\n\n\n{message} -> Program exiting...")
     print("Goodbye.")
     exit(0)
 
-def dataset_read():
-    with open(file, "r") as csvfile:
-        csvreader = csv.reader(csvfile)
-        fields = next(csvreader)
+def user_input():
+    rowNumber = int(input("\nEnter number of rows: "))
+    print("")
+    return rowNumber
 
-        for row in csvreader:
+def dataset_read():
+    rows = []
+    with open(file) as csvFile:
+        csvReader = csv.reader(csvFile, delimiter=",")
+
+        for row in csvReader:
             rows.append(row)
 
-        print("Total no. of rows: %d" % (csvreader.line_num))
+        print("Total no. of rows: %d" % (csvReader.line_num))
 
-    print("Fields: " + ", ".join(field for field in fields))
-    print("\n")
+    print("Columns:\n", rows[0])
 
-def display_dataset(n):
-    for row in rows[:n]:
-        for col in row:
-            print("%s" % col, end="")
+    return rows
+
+def get_rows(rows, n):
+    for row in rows[1:n + 1]:
+        print(row, "\n")
 
 if __name__ == "__main__":
-    dataset_read()
-    display_dataset(1)
+    rows = dataset_read()
+    rowNumber = user_input()
+    get_rows(rows, rowNumber)
