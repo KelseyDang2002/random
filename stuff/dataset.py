@@ -33,6 +33,7 @@ def menu():
     print("|\t\t\t\t\t|")
     print("|\t1. Display vehicles\t\t|")
     print("|\t2. Get vehicle make\t\t|")
+    print("|\t3. Exit program\t\t\t|")
     print("|\t\t\t\t\t|")
     print("_________________________________________\n")
 
@@ -60,7 +61,7 @@ def get_vehicle_make(rowList, make):
             print(f"\n{index}. {row[IDENTIFICATION_ID]}")
 
 def main():
-    choice = int(input("Enter a menu option (1-2): "))
+    choice = int(input("Enter a menu option (1-3): "))
     match choice:
         case 1:
             rowNumber = int(input("\nEnter desired number of rows: "))
@@ -69,6 +70,11 @@ def main():
         case 2:
             make = input("\nEnter a vehicle make: ")
             get_vehicle_make(rowList, make)
+            # model
+            # get_vehicle_model(rowList, make, model)
+
+        case 3:
+            program_exit("Exit program")
 
         case _:
             print("\nInvalid input. Try again.")
