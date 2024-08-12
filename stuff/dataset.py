@@ -28,9 +28,13 @@ def program_exit(message):
     print("Goodbye.")
     exit(0)
 
-def user_input():
-    rowNumber = int(input("Enter desired number of rows: "))
-    return rowNumber
+def menu():
+    print("\n\n_________________ MENU __________________")
+    print("|\t\t\t\t\t|")
+    print("|\t1. Display vehicles\t\t|")
+    print("|\t2. Get vehicle make\t\t|")
+    print("|\t\t\t\t\t|")
+    print("_________________________________________\n")
 
 def dataset_read():
     rowList = []
@@ -40,19 +44,41 @@ def dataset_read():
             rowList.append(row)
         print(f"Total no. of rows: {csvReader.line_num}")
 
-    print(f"Total no. of Columns: {len(rowList[0])}\n")
-    print(f"Fields: {rowList[0]}\n")
+    print(f"Total no. of columns: {len(rowList[0])}\n")
+    print(f"Fields: {rowList[0]}")
+    print("_________________________________________\n")
     return rowList
-
-def menu():
-    print("")
 
 def display_rows(rowList, rowNumber):
     for index, row in enumerate(rowList[1:rowNumber + 1], INDEX_START):
         print(f"\n{index}. {row[IDENTIFICATION_ID]}:")
         print(f"{row}")
 
+def get_vehicle_make(rowList, make):
+    for index, row in enumerate(rowList, INDEX_START):
+        if make == row[IDENTIFICATION_MAKE]:
+            print(f"\n{index}. {row[IDENTIFICATION_ID]}")
+
+def main():
+    choice = int(input("Enter a menu option (1-2): "))
+    match choice:
+        case 1:
+            rowNumber = int(input("\nEnter desired number of rows: "))
+            display_rows(rowList, rowNumber)
+        
+        case 2:
+            make = input("\nEnter a vehicle make: ")
+            get_vehicle_make(rowList, make)
+
+        case _:
+            print("\nInvalid input. Try again.")
+
 if __name__ == "__main__":
-    rowList = dataset_read()
-    rowNumber = user_input()
-    display_rows(rowList, rowNumber)
+    while True:
+        try:
+            menu()
+            rowList = dataset_read()
+            main()
+
+        except KeyboardInterrupt:
+            program_exit("KeyboardInterrupt")
