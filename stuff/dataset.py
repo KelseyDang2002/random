@@ -19,7 +19,7 @@ IDENTIFICATION_YEAR = 15
 ENGINE_STATISTICS_HORSEPOWER = 16
 ENGINE_STATISTICS_TORQUE = 17
 
-INDEX_START = 1
+INDEX_START = 0
 
 file = r"C:\Users\Kelsey PC\Downloads\cars.csv"
 
@@ -50,7 +50,7 @@ def dataset_read():
     return rowList
 
 def display_rows(rowList, rowNumber):
-    for index, row in enumerate(rowList[1:rowNumber + 1], INDEX_START):
+    for index, row in enumerate(rowList[1:rowNumber + 1], INDEX_START + 1):
         print(f"\n{index}. {row[IDENTIFICATION_ID]}:")
         print(f"{row}")
 
