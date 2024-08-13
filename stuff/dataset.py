@@ -20,6 +20,7 @@ ENGINE_STATISTICS_HORSEPOWER = 16
 ENGINE_STATISTICS_TORQUE = 17
 
 INDEX_START = 0
+DATA_START = 1
 
 file = r"C:\Users\Kelsey PC\Downloads\cars.csv"
 
@@ -32,7 +33,7 @@ def menu():
     print("\n\n_________________ MENU __________________")
     print("|\t\t\t\t\t|")
     print("|\t1. Display vehicles\t\t|")
-    print("|\t2. Get vehicle make\t\t|")
+    print("|\t2. Get vehicle make & model\t|")
     print("|\t3. Exit program\t\t\t|")
     print("|\t\t\t\t\t|")
     print("_________________________________________\n")
@@ -51,27 +52,33 @@ def dataset_read():
     return rowList
 
 def display_rows(rowList, rowNumber):
-    for index, row in enumerate(rowList[1:rowNumber + 1], INDEX_START + 1):
+    for index, row in enumerate(rowList[DATA_START:rowNumber + 1], INDEX_START + 1):
+        if rowNumber < DATA_START or rowNumber > len(rowList):
+            print("Invalid input.")
+            break
+    
         print(f"\n{index}. {row[IDENTIFICATION_ID]}:")
         print(f"{row}")
 
-def get_vehicle_make(rowList, make):
+def get_vehicle_make_model(rowList, make, model):
     for index, row in enumerate(rowList, INDEX_START):
-        if make == row[IDENTIFICATION_MAKE]:
+        if (make == row[IDENTIFICATION_MAKE].upper() and model in row[IDENTIFICATION_MODELYEAR].upper()):
             print(f"\n{index}. {row[IDENTIFICATION_ID]}")
+            print(f"\tEngine: {row[ENGINE_INFORMATION_ENGINETYPE]}")
+            print(f"\tTransmission: {row[ENGINE_INFORMATION_TRANSMISSION]}")
+            print(f"\tDrivetrain: {row[ENGINE_INFORMATION_DRIVELINE]}")
 
 def main():
-    choice = int(input("Enter a menu option (1-3): "))
+    choice = int(input("> Enter a menu option (1-3): "))
     match choice:
         case 1:
-            rowNumber = int(input("\nEnter desired number of rows: "))
+            rowNumber = int(input("\n> Enter desired number of rows: "))
             display_rows(rowList, rowNumber)
         
         case 2:
-            make = input("\nEnter a vehicle make: ")
-            get_vehicle_make(rowList, make)
-            # model
-            # get_vehicle_model(rowList, make, model)
+            make = input("\n> Enter a vehicle make: ").upper()
+            model = input("> Enter vehicle model (Press 'enter' if unspecified): ").upper()
+            get_vehicle_make_model(rowList, make, model)
 
         case 3:
             program_exit("Exit program")
