@@ -37,6 +37,7 @@ def menu():
     print("|\t3. Exit program\t\t\t|")
     print("|\t\t\t\t\t|")
     print("_________________________________________\n")
+    return
 
 def dataset_read():
     rowList = []
@@ -60,21 +61,48 @@ def display_rows(rowList, rowNumber):
         print(f"\n{index}. {row[IDENTIFICATION_ID]}:")
         print(f"{row}")
 
-def display_all_makes():
-    # unique makes
-    print("")
+    return
 
-def display_all_models(make):
-    # unique models
-    print("")
+def get_all_makes(rowList):
+    makeList = []
+    for row in rowList:
+        if row[IDENTIFICATION_MAKE] not in makeList:
+            makeList.append(row[IDENTIFICATION_MAKE])
+    
+    print("\nMakes:\n")
+    makeList.sort()
+    for make in makeList[1:]:
+        print(f"{make}")
 
-def get_vehicle_make_model(rowList, make, model):
+    return
+
+def get_all_models(rowList, make):
+    modelList = []
+    for row in rowList:
+        modelNoYearSublist = row[IDENTIFICATION_MODELYEAR].split(" ")[2:]
+        modelNoYearStr = " ".join(modelNoYearSublist)
+        
+        if (make == row[IDENTIFICATION_MAKE].upper()) and (modelNoYearStr not in modelList):
+            modelList.append(modelNoYearStr)
+            
+    print(f"\n{make} models:\n")
+    for model in modelList:
+        print(f"{model}")
+
+    return
+
+def get_vehicle_info(rowList, make, model):
+    print(f"\nResults for {make} {model}:")
     for index, row in enumerate(rowList, INDEX_START):
-        if (make == row[IDENTIFICATION_MAKE].upper() and model in row[IDENTIFICATION_MODELYEAR].upper()):
+        if (make == row[IDENTIFICATION_MAKE].upper()) and (model in row[IDENTIFICATION_MODELYEAR].upper()):
             print(f"\n{index}. {row[IDENTIFICATION_ID]}")
-            print(f"\tEngine: {row[ENGINE_INFORMATION_ENGINETYPE]}")
-            print(f"\tTransmission: {row[ENGINE_INFORMATION_TRANSMISSION]}")
-            print(f"\tDrivetrain: {row[ENGINE_INFORMATION_DRIVELINE]}")
+            print(f"\t- Engine: {row[ENGINE_INFORMATION_ENGINETYPE]}")
+            print(f"\t- Transmission: {row[ENGINE_INFORMATION_TRANSMISSION]}")
+            print(f"\t- Drivetrain: {row[ENGINE_INFORMATION_DRIVELINE]}")
+            print(f"\t- MPG (City): {row[FUEL_INFORMATION_CITYMPG]} miles")
+            print(f"\t- MPG (Highway): {row[FUEL_INFORMATION_HIGHWAYMPG]} miles")
+
+    return
 
 def main():
     choice = int(input("> Enter a menu option (1-3): "))
@@ -84,17 +112,19 @@ def main():
             display_rows(rowList, rowNumber)
         
         case 2:
-            # display_all_makes()
+            get_all_makes(rowList)
             make = input("\n> Enter a vehicle make: ").upper()
-            # display_all_models()
-            model = input("> Enter vehicle model (Press 'enter' if unspecified): ").upper()
-            get_vehicle_make_model(rowList, make, model)
+            get_all_models(rowList, make)
+            model = input("\n> Enter vehicle model (Press 'enter' if unspecified): ").upper()
+            get_vehicle_info(rowList, make, model)
 
         case 3:
             program_exit("Exit program")
 
         case _:
             print("\nInvalid input. Try again.")
+
+    return
 
 if __name__ == "__main__":
     while True:
