@@ -60,6 +60,14 @@ def display_rows(rowList, rowNumber):
         print(f"\n{index}. {row[IDENTIFICATION_ID]}:")
         print(f"{row}")
 
+def display_all_makes():
+    # unique makes
+    print("")
+
+def display_all_models(make):
+    # unique models
+    print("")
+
 def get_vehicle_make_model(rowList, make, model):
     for index, row in enumerate(rowList, INDEX_START):
         if (make == row[IDENTIFICATION_MAKE].upper() and model in row[IDENTIFICATION_MODELYEAR].upper()):
@@ -76,7 +84,9 @@ def main():
             display_rows(rowList, rowNumber)
         
         case 2:
+            # display_all_makes()
             make = input("\n> Enter a vehicle make: ").upper()
+            # display_all_models()
             model = input("> Enter vehicle model (Press 'enter' if unspecified): ").upper()
             get_vehicle_make_model(rowList, make, model)
 
