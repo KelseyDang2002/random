@@ -36,7 +36,7 @@ def menu():
     print("|\t2. Get vehicle make & model\t|")
     print("|\t3. Exit program\t\t\t|")
     print("|\t\t\t\t\t|")
-    print("_________________________________________\n")
+    print("|_______________________________________|\n")
     return
 
 def dataset_read():
@@ -48,7 +48,11 @@ def dataset_read():
         print(f"Total no. of rows: {csvReader.line_num}")
 
     print(f"Total no. of columns: {len(rowList[0])}\n")
-    print(f"Fields: {rowList[0]}")
+    print(f"Attributes:\n")
+    for index, attr in enumerate(rowList[0], INDEX_START):
+        print(f"[{index}]\t{attr}")
+    
+    print("_________________________________________", end="")
     print("_________________________________________\n")
     return rowList
 
@@ -65,13 +69,13 @@ def display_rows(rowList, rowNumber):
 
 def get_all_makes(rowList):
     makeList = []
-    for row in rowList:
+    for row in rowList[1:]:
         if row[IDENTIFICATION_MAKE] not in makeList:
             makeList.append(row[IDENTIFICATION_MAKE])
     
     print("\nMakes:\n")
     makeList.sort()
-    for make in makeList[1:]:
+    for make in makeList:
         print(f"{make}")
 
     return
