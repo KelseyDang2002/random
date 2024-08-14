@@ -34,8 +34,7 @@ def menu():
     print("|\t\t\t\t\t|")
     print("|\t1. Display vehicles\t\t|")
     print("|\t2. Get vehicle make & model\t|")
-    print("|\t3. Filter results\t\t|")
-    print("|\t4. Exit program\t\t\t|")
+    print("|\t3. Exit program\t\t\t|")
     print("|_______________________________________|\n")
     return
 
@@ -48,7 +47,7 @@ def dataset_read():
         print(f"Total no. of rows: {csvReader.line_num}")
 
     print(f"Total no. of columns: {len(rowList[0])}\n")
-    print(f"Attributes:\n")
+    print(f"Attributes:")
     for index, attr in enumerate(rowList[0], INDEX_START):
         print(f"[{index}]\t{attr}")
     
@@ -69,14 +68,16 @@ def display_rows(rowList, rowNumber):
 
 def get_all_makes(rowList):
     makeList = []
-    for row in rowList[1:]:
+    for row in rowList[DATA_START:]:
         if row[IDENTIFICATION_MAKE] not in makeList:
             makeList.append(row[IDENTIFICATION_MAKE])
     
     print("\nMakes:\n")
     makeList.sort()
-    for make in makeList:
-        print(f"{make}")
+    for index, make in enumerate(makeList, INDEX_START + 1):
+        print(f"{make}", end=" | ")
+        if index % 4 == 0:
+            print("\n------------------------------------------------------")
 
     return
 
@@ -109,7 +110,7 @@ def get_vehicle_info(rowList, make, model):
     return
 
 def main():
-    choice = int(input("> Enter a menu option (1-4): "))
+    choice = int(input("> Enter a menu option (1-3): "))
     match choice:
         case 1:
             rowNumber = int(input("\n> Enter desired number of rows: "))
@@ -118,17 +119,13 @@ def main():
         
         case 2:
             get_all_makes(rowList)
-            make = input("\n> Enter a vehicle make: ").upper()
+            make = input("\n\n> Enter a vehicle make: ").upper()
             get_all_models(rowList, make)
             model = input("\n> Enter vehicle model (Press 'enter' if unspecified): ").upper()
             get_vehicle_info(rowList, make, model)
             input("\n> Press 'enter' to continue...")
 
         case 3:
-            print("\nWIP")
-            input("\n> Press 'enter' to continue...")
-
-        case 4:
             program_exit("Exit program")
 
         case _:
