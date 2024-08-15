@@ -101,11 +101,11 @@ def get_vehicle_info(rowList, make, model):
     for index, row in enumerate(rowList, INDEX_START):
         if (make == row[IDENTIFICATION_MAKE].upper()) and (model in row[IDENTIFICATION_MODELYEAR].upper()):
             print(f"\n{index}. {row[IDENTIFICATION_ID]}")
-            print(f"\t- Engine: {row[ENGINE_INFORMATION_ENGINETYPE]}")
-            print(f"\t- Transmission: {row[ENGINE_INFORMATION_TRANSMISSION]}")
-            print(f"\t- Drivetrain: {row[ENGINE_INFORMATION_DRIVELINE]}")
-            print(f"\t- MPG (City): {row[FUEL_INFORMATION_CITYMPG]} miles")
-            print(f"\t- MPG (Highway): {row[FUEL_INFORMATION_HIGHWAYMPG]} miles")
+            print(f"\t- Engine:\t\t{row[ENGINE_INFORMATION_ENGINETYPE]}")
+            print(f"\t- Transmission:\t\t{row[ENGINE_INFORMATION_TRANSMISSION]}")
+            print(f"\t- Drivetrain:\t\t{row[ENGINE_INFORMATION_DRIVELINE]}")
+            print(f"\t- MPG (City):\t\t{row[FUEL_INFORMATION_CITYMPG]} miles")
+            print(f"\t- MPG (Highway):\t{row[FUEL_INFORMATION_HIGHWAYMPG]} miles")
 
     return
 
