@@ -44,6 +44,7 @@ def dataset_read():
         csvReader = csv.reader(csvFile, delimiter=",")
         for row in csvReader:
             rowList.append(row)
+        
         print(f"Total no. of rows: {csvReader.line_num}")
 
     print(f"Total no. of columns: {len(rowList[0])}\n")
@@ -51,22 +52,17 @@ def dataset_read():
     for index, attr in enumerate(rowList[0], INDEX_START):
         print(f"[{index}]\t{attr}")
     
-    print("_________________________________________", end="")
-    print("_________________________________________\n")
+    print("__________________________________________________________________________________\n")
     return rowList
 
 def display_rows(rowList, rowNumber):
     for index, row in enumerate(rowList[DATA_START:rowNumber + 1], INDEX_START + 1):
-        if rowNumber < DATA_START or rowNumber > len(rowList):
-            print("Invalid input.")
-            break
-    
         print(f"\n{index}. {row[IDENTIFICATION_ID]}:")
         print(f"{row}")
 
     return
 
-def get_all_makes(rowList):
+def display_all_makes(rowList):
     makeList = []
     for row in rowList[DATA_START:]:
         if row[IDENTIFICATION_MAKE] not in makeList:
@@ -76,10 +72,11 @@ def get_all_makes(rowList):
     makeList.sort()
     for index, make in enumerate(makeList, INDEX_START + 1):
         print(f"{make}", end=" | ")
+        
         if index % 4 == 0:
             print("\n------------------------------------------------------")
 
-    return
+    return makeList
 
 def get_all_models(rowList, make):
     modelList = []
@@ -94,7 +91,7 @@ def get_all_models(rowList, make):
     for model in modelList:
         print(f"{model}")
 
-    return
+    return modelList
 
 def get_vehicle_info(rowList, make, model):
     print(f"\nResults for {make} {model}:")
@@ -109,21 +106,47 @@ def get_vehicle_info(rowList, make, model):
 
     return
 
+def display_vehicles(rowList):
+    rowNumber = int(input("\n> Enter desired number of rows: "))
+    if (rowNumber < 1) or (rowNumber > len(rowList)):
+        print("\nInvalid input.")
+        return False
+    
+    display_rows(rowList, rowNumber)
+    input("\n> Press 'enter' to continue...")
+    return
+
+def get_vehicle_make_model(rowList):
+    makeList = display_all_makes(rowList)
+    make = input("\n\n> Enter a vehicle make: ").upper()
+    # [index.upper() for index in makeList]
+    # print(makeList)
+    # if make not in makeList:
+    #     print(f"\nNo results for make '{make}'.")
+    #     return False
+
+    modelList = get_all_models(rowList, make)
+    model = input("\n> Enter vehicle model (Press 'enter' if unspecified): ").upper()
+    # [index.upper() for index in modelList]
+    # print(modelList)
+    # if model not in modelList:
+    #     print(f"\nNo results for model '{model}'.")
+    #     return False
+
+    get_vehicle_info(rowList, make, model)
+    input("\n> Press 'enter' to continue...")
+    return
+
 def main():
+    menu()
+    rowList = dataset_read()
     choice = int(input("> Enter a menu option (1-3): "))
     match choice:
         case 1:
-            rowNumber = int(input("\n> Enter desired number of rows: "))
-            display_rows(rowList, rowNumber)
-            input("\n> Press 'enter' to continue...")
+            display_vehicles(rowList)
         
         case 2:
-            get_all_makes(rowList)
-            make = input("\n\n> Enter a vehicle make: ").upper()
-            get_all_models(rowList, make)
-            model = input("\n> Enter vehicle model (Press 'enter' if unspecified): ").upper()
-            get_vehicle_info(rowList, make, model)
-            input("\n> Press 'enter' to continue...")
+            get_vehicle_make_model(rowList)
 
         case 3:
             program_exit("Exit program")
@@ -136,8 +159,6 @@ def main():
 if __name__ == "__main__":
     while True:
         try:
-            menu()
-            rowList = dataset_read()
             main()
 
         except KeyboardInterrupt:
