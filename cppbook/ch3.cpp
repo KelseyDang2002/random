@@ -1,6 +1,22 @@
 #include <iostream>
+#include <string>
 using std::cout;
 using std::endl;
+using std::string;
+
+void counter();
+void string_example();
+void inventory();
+void tic_tac_toe();
+
+int main()
+{
+    // counter();
+    // string_example();
+    inventory();
+    // tic_tac_toe();
+    return 0;
+}
 
 void counter()
 {
@@ -47,12 +63,58 @@ void counter()
 
 void string_example()
 {
+    string word1 = "Game";
+    string word2("Over");
+    string word3(3, '!');
+
+    string phrase = word1 + " " + word2 + word3;
+    cout << "The phrase is: " << phrase << "\n\n";
+
+    cout << "The phrase has " << phrase.size() << " characters in it.\n\n";
+
+    cout << "The character at position 0 is: " << phrase[0] << "\n\n";
+
+    cout << "Changing the character at position 4 and 5.\n";
+    phrase[4] = 'J';
+    phrase[5] = 'o';
+    cout << "The phrase is now: " << phrase << "\n\n";
+
+    for (unsigned int i = 0; i < phrase.size(); i++)
+    {
+        cout << "Character at position " << i << " is: " << phrase[i] << endl;
+    }
+
+    cout << "\nThe sequence 'Jover' begins at location ";
+    cout << phrase.find("Jover") << endl;
+
+    if (phrase.find("Over") == string::npos)
+    {
+        cout << "'Over' is not in the phrase.\n\n";
+    }
+
+    phrase.erase(4, 5);
+    cout << "The phrase is now: " << phrase << endl;
+
+    phrase.erase(4);
+    cout << "The phrase is now: " << phrase << endl;
+
+    phrase.erase();
+    cout << "The phrase is now: " << phrase << endl;
+
+    if (phrase.empty())
+    {
+        cout << "The phrase is no more.\n";
+    }
+}
+
+void inventory()
+{
     cout;
 }
 
-int main()
+void tic_tac_toe()
 {
-    // counter();
-    string_example();
-    return 0;
+    cout;
 }
+
+
