@@ -13,8 +13,8 @@ int main()
 {
     // counter();
     // string_example();
-    inventory();
-    // tic_tac_toe();
+    // inventory();
+    tic_tac_toe();
     return 0;
 }
 
@@ -109,12 +109,80 @@ void string_example()
 
 void inventory()
 {
-    cout;
+    const int MAX_ITEMS = 10;
+    string inventory[MAX_ITEMS];
+
+    int numItems = 0;
+    inventory[numItems++] = "sword";
+    inventory[numItems++] = "armor";
+    inventory[numItems++] = "shield";
+
+    cout << "Your items:\n";
+    for (int i = 0; i < numItems; i++)
+    {
+        cout << inventory[i] << endl;
+    }
+
+    cout << "\nYou trade your sword for a battle axe.";
+    inventory[0] = "battle axe";
+
+    cout << "Your items:\n";
+    for (int i = 0; i < numItems; i++)
+    {
+        cout << inventory[i] << endl;
+    }
+
+    cout << "\nYou find a healing potion.";
+    if (numItems < MAX_ITEMS)
+    {
+        inventory[numItems++] = "healing potion";
+    }
+    else
+    {
+        cout << "You have too many items and can't carry another.";
+    }
+
+    cout << "\nYour items:\n";
+    for (int i = 0; i < numItems; i++)
+    {
+        cout << inventory[i] << endl;
+    }
 }
 
 void tic_tac_toe()
 {
-    cout;
+    const int ROWS = 3;
+    const int COLUMNS = 3;
+    char board[ROWS][COLUMNS] = {
+        {'O', 'X', 'O'},
+        {' ', 'X', 'X'},
+        {'X', 'O', 'O'}
+    };
+
+    cout << "Here's the tic-tac-toe board:\n";
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLUMNS; j++)
+        {
+            cout << board[i][j];
+        }
+
+        cout << endl;
+    }
+
+    cout << "\n'X' movs to the empty location.\n\n";
+    board[1][0] = 'X';
+
+    cout << "Now the tic-tac-toe board is:\n";
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLUMNS; j++)
+        {
+            cout << board[i][j];
+        }
+
+        cout << endl;
+    }
+
+    cout << "\n'X' wins!";
 }
-
-
