@@ -1,21 +1,47 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(void)
+typedef struct node
 {
-    int numbers[] = {20, 500, 10, 5, 100, 1, 50};
+    int number;
+    struct node *next;
+}
+node;
 
-    int n;
-    printf("Number: ");
-    scanf("%d", &n);
+int main(int argc, char *argv[])
+{
+    node *list = NULL; // init list
 
-    for (int i = 0; i < 7; i++)
+    for (int i = 1; i < argc; i++)
     {
-        if (numbers[i] == n)
+        int number = atoi(argv[i]);
+
+        node *n = malloc(sizeof(node)); // allocate memory for pointer n
+        if (n == NULL)
         {
-            printf("Found\n");
-            return 0;
+            return 1;
         }
+        n->number = number; // n point to new node number
+        n->next = NULL; // n point to new node next
+
+        n->next = list; // link new node to list
+        list = n; // set n to start of list
     }
-    printf("Not found\n");
-    return 1;
+
+    node *ptr = list; // point to first node of list
+    while (ptr != NULL) // while not at the end of the list
+    {
+        printf("%i\n", ptr->number);
+        ptr = ptr->next; // iterate to next node number
+    }
+
+    ptr = list;
+    while (ptr != NULL)
+    {
+        node *next = ptr->next; // new pointer temporarily poiting at next node
+        free(ptr);
+        ptr = next;
+    }
+
+    return 0;
 }
