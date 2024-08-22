@@ -28,14 +28,19 @@ int main(int argc, char *argv[])
         list = n; // set n to start of list
     }
 
-    node *ptr = list; // point to first node of list
-    while (ptr != NULL) // while not at the end of the list
+    // node *ptr = list; // point to first node of list
+    // while (ptr != NULL) // while not at the end of the list
+    // {
+    //     printf("%i\n", ptr->number);
+    //     ptr = ptr->next; // iterate to next node number
+    // }
+
+    for (node *ptr = list; ptr != NULL; ptr = ptr->next)
     {
         printf("%i\n", ptr->number);
-        ptr = ptr->next; // iterate to next node number
     }
 
-    ptr = list;
+    node *ptr = list;
     while (ptr != NULL)
     {
         node *next = ptr->next; // new pointer temporarily poiting at next node
