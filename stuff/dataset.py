@@ -1,4 +1,6 @@
 import csv
+from dotenv import load_dotenv
+import os
 
 DIMENSIONS_HEIGHT = 0
 DIMENSIONS_LENGTH = 1
@@ -22,7 +24,9 @@ ENGINE_STATISTICS_TORQUE = 17
 INDEX_START = 0
 DATA_START = 1
 
-file = r"C:\Users\Kelsey PC\Downloads\cars.csv"
+load_dotenv()
+
+file = os.getenv(r"FILE")
 
 def program_exit(message):
     print(f"\n\n\n{message} -> Program exiting...")
