@@ -24,14 +24,27 @@ ENGINE_STATISTICS_TORQUE = 17
 INDEX_START = 0
 DATA_START = 1
 
-load_dotenv()
+def main():
+    menu()
+    load_dotenv()
+    file = os.getenv(r"FILE")
+    rowList = dataset_read(file)
 
-file = os.getenv(r"FILE")
+    choice = int(input("> Enter a menu option (1-3): "))
+    match choice:
+        case 1:
+            display_vehicles(rowList)
+        
+        case 2:
+            get_vehicle_make_model(rowList)
 
-def program_exit(message):
-    print(f"\n\n\n{message} -> Program exiting...")
-    print("Goodbye.")
-    exit(0)
+        case 3:
+            program_exit("Exit program")
+
+        case _:
+            print("\nInvalid input. Try again.")
+
+    return
 
 def menu():
     print("\n\n_________________ MENU __________________")
@@ -42,7 +55,7 @@ def menu():
     print("|_______________________________________|\n")
     return
 
-def dataset_read():
+def dataset_read(file):
     rowList = []
     with open(file) as csvFile:
         csvReader = csv.reader(csvFile, delimiter=",")
@@ -141,24 +154,10 @@ def get_vehicle_make_model(rowList):
     input("\n> Press 'enter' to continue...")
     return
 
-def main():
-    menu()
-    rowList = dataset_read()
-    choice = int(input("> Enter a menu option (1-3): "))
-    match choice:
-        case 1:
-            display_vehicles(rowList)
-        
-        case 2:
-            get_vehicle_make_model(rowList)
-
-        case 3:
-            program_exit("Exit program")
-
-        case _:
-            print("\nInvalid input. Try again.")
-
-    return
+def program_exit(message):
+    print(f"\n\n\n{message} -> Program exiting...")
+    print("Goodbye.")
+    exit(0)
 
 if __name__ == "__main__":
     while True:
