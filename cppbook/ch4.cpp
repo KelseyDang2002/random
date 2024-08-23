@@ -5,10 +5,12 @@
 using namespace std;
 
 void inventory_2();
+void inventory_3();
 
 int main()
 {
-    inventory_2();
+    // inventory_2();
+    inventory_3();
     return 0;
 }
 
@@ -55,5 +57,22 @@ void inventory_2()
     else
     {
         cout << "\nYou have at least one item.\n";
+    }
+}
+
+void inventory_3()
+{
+    vector<string> inventory;
+    inventory.push_back("sword");
+    inventory.push_back("armor");
+    inventory.push_back("shield");
+
+    vector<string>::iterator myIterator; // declare iterator
+    vector<string>::const_iterator iter; // declare const iterator
+
+    cout << "\nYour items:\n";
+    for (iter = inventory.begin(); iter != inventory.end(); iter++)
+    {
+        cout << *iter << endl;
     }
 }
