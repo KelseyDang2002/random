@@ -1,16 +1,21 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
 
 void inventory_2();
 void inventory_3();
+void high_scores();
 
 int main()
 {
     // inventory_2();
-    inventory_3();
+    // inventory_3();
+    high_scores();
     return 0;
 }
 
@@ -75,4 +80,43 @@ void inventory_3()
     {
         cout << *iter << endl;
     }
+
+    cout << "\nYou trade your sword for a battle axe.";
+    myIterator = inventory.begin(); // first element
+    *myIterator = "battle axe";
+    
+    cout << "\nYour items:\n";
+    for (iter = inventory.begin(); iter != inventory.end(); iter++)
+    {
+        cout << *iter << endl;
+    }
+
+    cout << "\nThe item name '" << *myIterator << "' has ";
+    cout << (*myIterator).size() << " letters in it.\n";
+
+    cout << "\nThe item name '" << *myIterator << "' has ";
+    cout << myIterator->size() << " letters in it.\n";
+
+    cout << "\nYou recover a crossbow form a slain enemy.";
+    inventory.insert(inventory.begin(), "crossbow");
+
+    cout << "\nYour items:\n";
+    for (iter = inventory.begin(); iter != inventory.end(); iter++)
+    {
+        cout << *iter << endl;
+    }
+
+    cout << "\nYour armor is destroyed in a fierce battle.";
+    inventory.erase((inventory.begin() + 2)); // armor is at index 2 from the beginning of the vector
+
+    cout << "\nYour items:\n";
+    for (iter = inventory.begin(); iter != inventory.end(); iter++)
+    {
+        cout << *iter << endl;
+    }
+}
+
+void high_scores()
+{
+    vector<int>::const_iterator iter;
 }
